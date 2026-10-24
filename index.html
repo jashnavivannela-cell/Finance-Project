@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fingo — Personal Wealth & Expense Management</title>
+  <meta name="description" content="Manage your daily expenses, track monthly budgets in Indian Rupees (₹), track UPI & card payments, AI financial coach, and Section 80C tax planner with Fingo.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- AUTH / LOGIN OVERLAY SCREEN -->
+  <div class="auth-overlay" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <h2>Fingo<span>.</span></h2>
+        <p>Smart Personal Wealth & Expense Tracker</p>
+        <div class="security-badge-pill">
+          <i class="fa-solid fa-shield-halved"></i> 256-Bit SSL Encrypted
+        </div>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab-btn active" id="showLoginBtn">Sign In</button>
+        <button class="auth-tab-btn" id="showRegisterBtn">Register</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="loginEmail" required value="jashnavi.patel@fingo.in" placeholder="name@domain.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="loginPassword" required value="demo1234" placeholder="••••••••">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-right-to-bracket"></i> Login to Fingo
+        </button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="registerForm" class="auth-form">
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-user input-icon"></i>
+            <input type="text" id="regName" required placeholder="e.g. Jashnavi Patel">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regEmail">Email Address</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="regEmail" required placeholder="name@domain.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Create Password</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="regPassword" required placeholder="At least 6 characters">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          <i class="fa-solid fa-user-plus"></i> Create Fingo Account
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION LAYOUT -->
+  <div class="app-container" id="appMain" style="display: none;">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Fingo<span>.</span></span>
+          <span class="brand-tag">PRO WEALTH</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#dashboard" class="nav-item active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#expenses" class="nav-item" data-tab="expenses">
+          <i class="fa-solid fa-receipt"></i>
+          <span>Expense Tracker</span>
+        </a>
+        <a href="#transactions" class="nav-item" data-tab="transactions">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Transactions</span>
+        </a>
+        <a href="#budgets" class="nav-item" data-tab="budgets">
+          <i class="fa-solid fa-piggy-bank"></i>
+          <span>Budgets & Goals</span>
+        </a>
+        <a href="#split-settle" class="nav-item" data-tab="split-settle">
+          <i class="fa-solid fa-people-arrows"></i>
+          <span>Split & UPI Settle</span>
+        </a>
+        <a href="#wealth-freedom" class="nav-item" data-tab="wealth-freedom">
+          <i class="fa-solid fa-compass-drafting"></i>
+          <span>Wealth & FIRE Engine</span>
+        </a>
+        <a href="#tax-subscriptions" class="nav-item" data-tab="tax-subscriptions">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Tax & Subscriptions</span>
+        </a>
+        <a href="#analytics" class="nav-item" data-tab="analytics">
+          <i class="fa-solid fa-chart-line"></i>
+          <span>Analytics</span>
+        </a>
+        <a href="#profile" class="nav-item" data-tab="profile">
+          <i class="fa-solid fa-user-gear"></i>
+          <span>My Profile</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-widget">
+        <div class="widget-header">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Financial Health</span>
+        </div>
+        <div class="health-score-container">
+          <div class="health-score-ring">
+            <svg viewBox="0 0 36 36" class="circular-chart emerald">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle" stroke-dasharray="92, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <text x="18" y="20.35" class="percentage">92</text>
+            </svg>
+          </div>
+          <div class="health-info">
+            <span class="health-status">Excellent</span>
+            <span class="health-desc">Top 5% Saver</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar-placeholder-container" id="sidebarAvatarContainer"></div>
+          <div class="user-details">
+            <span class="user-name" id="sidebarUserName">Jashnavi Patel</span>
+            <span class="user-tier">FINGO EXECUTIVE</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" title="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar Header -->
+      <header class="topbar">
+        <div class="mobile-toggle" id="mobileToggle">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="topbar-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="globalSearch" placeholder="Search expenses, UPI IDs, categories... (Ctrl + K)">
+        </div>
+
+        <div class="topbar-actions">
+          <div class="currency-selector-wrapper">
+            <i class="fa-solid fa-indian-rupee-sign"></i>
+            <select id="currencySelector" class="custom-select">
+              <option value="₹" data-symbol="₹" selected>INR (₹)</option>
+              <option value="$" data-symbol="$">USD ($)</option>
+              <option value="€" data-symbol="€">EUR (€)</option>
+              <option value="£" data-symbol="£">GBP (£)</option>
+            </select>
+          </div>
+
+          <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+
+          <button class="btn btn-secondary" id="exportCsvBtn" title="Export CSV">
+            <i class="fa-solid fa-download"></i>
+            <span>Export</span>
+          </button>
+
+          <button class="btn btn-primary" id="openAddModalBtn">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Expense</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: OVERVIEW DASHBOARD -->
+      <section class="tab-content active" id="tab-dashboard">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fingo Dashboard</h1>
+            <p class="page-subtitle">Welcome back, <span id="dashWelcomeName">Jashnavi</span>. Click any card or entry for detailed breakdown.</p>
+          </div>
+          <div class="date-range-badge">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="currentDateRange">October 2026</span>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card balance-card clickable-card" id="metricCardBalance" title="Click for Net Worth Details">
+            <div class="metric-header">
+              <span class="metric-title">Managed Net Worth</span>
+              <div class="metric-icon balance"><i class="fa-solid fa-vault"></i></div>
+            </div>
+            <div class="metric-value" id="totalBalanceVal">₹4,85,200.00</div>
+            <div class="metric-footer positive">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>+14.2% MoM • Click for breakdown</span>
+            </div>
+          </div>
+
+          <div class="metric-card income-card clickable-card" id="metricCardIncome" title="Click for Income Details">
+            <div class="metric-header">
+              <span class="metric-title">Total Inflow</span>
+              <div class="metric-icon income"><i class="fa-solid fa-arrow-down-left"></i></div>
+            </div>
+            <div class="metric-value" id="totalIncomeVal">₹1,60,000.00</div>
+            <div class="metric-footer positive">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Salary & Freelance • Details</span>
+            </div>
+          </div>
+
+          <div class="metric-card expense-card clickable-card" id="metricCardExpense" title="Click for Outflow Details">
+            <div class="metric-header">
+              <span class="metric-title">Total Outflow</span>
+              <div class="metric-icon expense"><i class="fa-solid fa-arrow-up-right"></i></div>
+            </div>
+            <div class="metric-value" id="totalExpenseVal">₹42,350.00</div>
+            <div class="metric-footer negative">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>-6.5% spending • Details</span>
+            </div>
+          </div>
+
+          <div class="metric-card savings-card clickable-card" id="metricCardSavings" title="Click for Savings Details">
+            <div class="metric-header">
+              <span class="metric-title">Savings Ratio</span>
+              <div class="metric-icon savings"><i class="fa-solid fa-piggy-bank"></i></div>
+            </div>
+            <div class="metric-value" id="savingsRateVal">73.5%</div>
+            <div class="metric-footer neutral">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Target 50% • View details</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- UNIQUE FEATURE 1: FINGO SMART AI FINANCIAL COACH WIDGET -->
+        <div class="card ai-coach-card" style="margin-bottom: 2rem;">
+          <div class="ai-coach-header">
+            <div class="ai-title-group">
+              <div class="ai-icon-bubble"><i class="fa-solid fa-brain"></i></div>
+              <div>
+                <h3>Fingo AI Financial Advisor</h3>
+                <p>Real-time automated portfolio & spending recommendations</p>
+              </div>
+            </div>
+            <span class="badge badge-accent">AI Coach Active</span>
+          </div>
+
+          <div class="ai-tips-container" id="aiTipsContainer">
+            <div class="ai-tip-item">
+              <i class="fa-solid fa-lightbulb tip-icon"></i>
+              <div class="tip-content">
+                <strong>Tax Saving Opportunity:</strong> You have <strong>₹40,000 headroom remaining</strong> under Section 80C. Investing this before March can save you up to <strong>₹12,480 in Income Tax</strong>.
+              </div>
+              <button class="btn btn-secondary btn-sm" id="aiTipActionBtn">Plan 80C</button>
+            </div>
+          </div>
+
+          <div class="ai-ask-wrapper">
+            <input type="text" id="aiAskInput" placeholder="Ask Fingo AI: 'How much can I invest in SIP this month?' or 'Show subscription savings'">
+            <button class="btn btn-primary" id="aiAskBtn"><i class="fa-solid fa-paper-plane"></i> Ask AI</button>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+          <div class="card chart-card flex-2">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Monthly Cash Flow Trajectory (₹)</h3>
+                <p>Income vs Expenses monthly comparison</p>
+              </div>
+              <div class="card-actions">
+                <span class="badge badge-accent">Fingo FY 2026-27</span>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="cashflowChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card chart-card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Category Allocation</h3>
+                <p>Expense distribution in ₹</p>
+              </div>
+            </div>
+            <div class="chart-container pie-container">
+              <canvas id="categoryPieChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions & Savings Goals -->
+        <div class="dashboard-bottom-grid">
+          <div class="card flex-2">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Recent Transactions</h3>
+                <p>Click any row to view full details</p>
+              </div>
+              <button class="btn-text" id="viewAllTransBtn">View All <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="dashboardRecentTable">
+                <thead>
+                  <tr>
+                    <th>Transaction</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="dashboardRecentBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Savings Targets</h3>
+                <p>Click card to add funds or view goals</p>
+              </div>
+              <button class="btn-icon" id="addGoalQuickBtn" title="Add Goal"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div class="goals-mini-list" id="goalsMiniList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: EXPENSE TRACKER -->
+      <section class="tab-content" id="tab-expenses">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fingo Expense Analytics</h1>
+            <p class="page-subtitle">Track every rupee spent across UPI, Credit Cards, and Net Banking.</p>
+          </div>
+          <button class="btn btn-primary" id="expTabAddBtn">
+            <i class="fa-solid fa-plus"></i> Record Expense
+          </button>
+        </div>
+
+        <div class="insights-grid">
+          <div class="card insight-card">
+            <div class="insight-icon expense"><i class="fa-solid fa-qrcode"></i></div>
+            <div class="insight-content">
+              <h4>UPI Outflows</h4>
+              <p class="insight-value" id="upiTotalVal">₹18,450.00</p>
+              <p class="insight-desc">GPay, PhonePe, Paytm QR payments.</p>
+            </div>
+          </div>
+
+          <div class="card insight-card">
+            <div class="insight-icon info"><i class="fa-solid fa-credit-card"></i></div>
+            <div class="insight-content">
+              <h4>Credit Card Outflows</h4>
+              <p class="insight-value" id="cardTotalVal">₹15,600.00</p>
+              <p class="insight-desc">HDFC Regalia & ICICI Card statements.</p>
+            </div>
+          </div>
+
+          <div class="card insight-card">
+            <div class="insight-icon success"><i class="fa-solid fa-building-columns"></i></div>
+            <div class="insight-content">
+              <h4>Bank Auto-Debits</h4>
+              <p class="insight-value" id="bankTotalVal">₹8,300.00</p>
+              <p class="insight-desc">Rent & Mutual Fund SIP debits.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card chart-card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Payment Instrument Share</h3>
+                <p>UPI vs Cards vs NetBanking</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="paymentMethodChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Top Expense Outflows</h3>
+                <p>Click entry for transaction receipt</p>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th class="text-right">Amount (₹)</th>
+                  </tr>
+                </thead>
+                <tbody id="topExpensesBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: TRANSACTIONS -->
+      <section class="tab-content" id="tab-transactions">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Transaction Audit Ledger</h1>
+            <p class="page-subtitle">Click any row to inspect complete audit details & payment reference.</p>
+          </div>
+          <button class="btn btn-primary" id="transTabAddBtn">
+            <i class="fa-solid fa-plus"></i> Add Entry
+          </button>
+        </div>
+
+        <div class="card filter-bar-card">
+          <div class="filter-row">
+            <div class="filter-group search-input">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="transSearchInput" placeholder="Filter title, note, or UPI handle...">
+            </div>
+
+            <div class="filter-group">
+              <label><i class="fa-solid fa-filter"></i> Type:</label>
+              <select id="transTypeFilter" class="custom-select">
+                <option value="all">All Types</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label><i class="fa-solid fa-tags"></i> Category:</label>
+              <select id="transCatFilter" class="custom-select">
+                <option value="all">All Categories</option>
+                <option value="Housing">Housing</option>
+                <option value="Food & Dining">Food & Dining</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Salary & Earnings">Salary & Earnings</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Investment / SIP">Investment / SIP</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <button class="btn btn-secondary" id="resetFiltersBtn">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table" id="fullTransTable">
+              <thead>
+                <tr>
+                  <th class="sortable" data-sort="title">Description <i class="fa-solid fa-sort"></i></th>
+                  <th class="sortable" data-sort="category">Category <i class="fa-solid fa-sort"></i></th>
+                  <th class="sortable" data-sort="date">Date <i class="fa-solid fa-sort"></i></th>
+                  <th class="sortable" data-sort="type">Type <i class="fa-solid fa-sort"></i></th>
+                  <th class="sortable text-right" data-sort="amount">Amount (₹) <i class="fa-solid fa-sort"></i></th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="fullTransBody"></tbody>
+            </table>
+          </div>
+          <div class="table-footer">
+            <span id="tableRecordCount">Showing 0 entries</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: BUDGETS & GOALS -->
+      <section class="tab-content" id="tab-budgets">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Budgets & Savings Targets</h1>
+            <p class="page-subtitle">Click category cards to view category transactions or edit limits.</p>
+          </div>
+          <div class="header-buttons">
+            <button class="btn btn-secondary" id="openAddGoalModalBtn">
+              <i class="fa-solid fa-bullseye"></i> New Goal
+            </button>
+            <button class="btn btn-primary" id="openAddBudgetModalBtn">
+              <i class="fa-solid fa-sliders"></i> New Limit
+            </button>
+          </div>
+        </div>
+
+        <div class="section-title-wrapper">
+          <h2><i class="fa-solid fa-chart-bar"></i> Monthly Category Allocations (₹)</h2>
+        </div>
+        <div class="budgets-grid" id="budgetsGrid"></div>
+
+        <div class="section-title-wrapper mt-4">
+          <h2><i class="fa-solid fa-trophy"></i> Financial Milestones & SIP Targets</h2>
+        </div>
+        <div class="goals-grid" id="goalsGrid"></div>
+      </section>
+
+      <!-- UNIQUE FEATURE: FINGO SPLIT & INSTANT UPI SETTLE -->
+      <section class="tab-content" id="tab-split-settle">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fingo Split & UPI Instant Settle</h1>
+            <p class="page-subtitle">Split group expenses, manage balances, and generate instant UPI QR payment codes.</p>
+          </div>
+          <div class="header-buttons">
+            <button class="btn btn-primary" id="openAddSplitModalBtn">
+              <i class="fa-solid fa-plus"></i> New Group Expense
+            </button>
+          </div>
+        </div>
+
+        <!-- Split Metrics Banner -->
+        <div class="metrics-grid" style="margin-bottom: 2rem;">
+          <div class="card metric-card">
+            <div class="metric-icon primary">
+              <i class="fa-solid fa-people-group"></i>
+            </div>
+            <div class="metric-content">
+              <span class="metric-title">Total Group Volume</span>
+              <h3 class="metric-value" id="splitTotalVolumeVal">₹29,600.00</h3>
+              <span class="metric-subtitle">Across 3 active groups</span>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <div class="metric-icon emerald">
+              <i class="fa-solid fa-arrow-down-left"></i>
+            </div>
+            <div class="metric-content">
+              <span class="metric-title">You Are Owed</span>
+              <h3 class="metric-value emerald" id="splitYouAreOwedVal">₹3,450.00</h3>
+              <span class="metric-subtitle">From 2 members</span>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <div class="metric-icon rose">
+              <i class="fa-solid fa-arrow-up-right"></i>
+            </div>
+            <div class="metric-content">
+              <span class="metric-title">You Owe</span>
+              <h3 class="metric-value rose" id="splitYouOweVal">₹450.00</h3>
+              <span class="metric-subtitle">1 pending payment</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group Expenses List -->
+        <div class="section-title-wrapper">
+          <h2><i class="fa-solid fa-layer-group"></i> Active Group Bills & Balances</h2>
+        </div>
+        <div class="split-bills-grid" id="splitBillsGrid"></div>
+      </section>
+
+      <!-- UNIQUE FEATURE: WEALTH & FIRE RETIREMENT ENGINE -->
+      <section class="tab-content" id="tab-wealth-freedom">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Wealth & FIRE Engine</h1>
+            <p class="page-subtitle">Financial Independence & Early Retirement (FIRE) simulator, Debt Avalanche optimizer, and Crisis Stress Shield.</p>
+          </div>
+        </div>
+
+        <!-- Sub-Nav Pill Switcher -->
+        <div class="tab-subnav">
+          <button class="subnav-btn active" data-subtab="fire-calculator"><i class="fa-solid fa-fire"></i> FIRE Retirement Simulator</button>
+          <button class="subnav-btn" data-subtab="debt-optimizer"><i class="fa-solid fa-scale-balanced"></i> Debt Avalanche & CIBIL</button>
+          <button class="subnav-btn" data-subtab="crisis-shield"><i class="fa-solid fa-shield-virus"></i> Emergency Crisis Shield</button>
+        </div>
+
+        <!-- SUBTAB 1: FIRE CALCULATOR -->
+        <div class="subtab-content active" id="subtab-fire-calculator">
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-fire" style="color:var(--amber);"></i> FIRE Target & Financial Independence Calculator</h3>
+                <p>Simulate portfolio compounding & retirement target based on Indian macro inflation</p>
+              </div>
+              <span class="badge badge-accent">25x Inflation Rule</span>
+            </div>
+
+            <div class="fire-sim-container">
+              <div class="fire-controls-grid">
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <label for="fireCurrentAge">Current Age</label>
+                    <span class="slider-val" id="fireCurrentAgeVal">28 yrs</span>
+                  </div>
+                  <input type="range" id="fireCurrentAge" min="18" max="65" value="28">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <label for="fireTargetAge">Target Retirement Age</label>
+                    <span class="slider-val" id="fireTargetAgeVal">45 yrs</span>
+                  </div>
+                  <input type="range" id="fireTargetAge" min="30" max="75" value="45">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <label for="fireMonthlyExpenseInput">Desired Monthly Expenses (₹)</label>
+                    <span class="slider-val" id="fireMonthlyExpenseVal">₹50,000</span>
+                  </div>
+                  <input type="range" id="fireMonthlyExpenseInput" min="20000" max="300000" step="5000" value="50000">
+                </div>
+
+                <div class="slider-group">
+                  <div class="slider-label-row">
+                    <label for="fireReturnRate">Expected Portfolio Growth (p.a.)</label>
+                    <span class="slider-val" id="fireReturnRateVal">12.0%</span>
+                  </div>
+                  <input type="range" id="fireReturnRate" min="5" max="18" step="0.5" value="12.0">
+                </div>
+              </div>
+
+              <!-- Output KPI Cards -->
+              <div class="fire-results-grid">
+                <div class="fire-res-card">
+                  <span class="res-title">Target FIRE Number</span>
+                  <h2 class="res-value emerald" id="fireTargetCorpusVal">₹2,84,65,000</h2>
+                  <span class="res-desc">Adjusted for 6% inflation at age 45</span>
+                </div>
+
+                <div class="fire-res-card">
+                  <span class="res-title">Years to Freedom</span>
+                  <h2 class="res-value primary" id="fireYearsToFreedomVal">17 Years</h2>
+                  <span class="res-desc">Required SIP: ₹38,400/month</span>
+                </div>
+
+                <div class="fire-res-card">
+                  <span class="res-title">Freedom Tier</span>
+                  <h2 class="res-value cyan" id="fireTierBadge">Standard FIRE</h2>
+                  <span class="res-desc">Lean: ₹1.5 Cr | Fat: ₹4.8 Cr</span>
+                </div>
+              </div>
+
+              <!-- Chart -->
+              <div class="chart-container" style="height: 320px; margin-top: 1.5rem;">
+                <canvas id="fireChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 2: DEBT OPTIMIZER & CIBIL -->
+        <div class="subtab-content" id="subtab-debt-optimizer">
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-scale-balanced" style="color:var(--rose);"></i> Debt Avalanche vs Debt Snowball Payoff Engine</h3>
+                <p>Minimize interest paid & clear loans up to 40% faster</p>
+              </div>
+              <div class="strategy-toggle">
+                <button class="strategy-btn active" id="strategyAvalancheBtn">Debt Avalanche (Highest APR First)</button>
+                <button class="strategy-btn" id="strategySnowballBtn">Debt Snowball (Smallest Balance First)</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Loan / Card Name</th>
+                    <th>Type</th>
+                    <th>Interest Rate (APR)</th>
+                    <th>Outstanding Balance (₹)</th>
+                    <th>Min. Monthly EMI (₹)</th>
+                    <th class="text-center">Priority Status</th>
+                  </tr>
+                </thead>
+                <tbody id="debtsBody">
+                  <tr>
+                    <td><strong>HDFC Regalia Credit Card</strong></td>
+                    <td><span class="badge badge-accent" style="background:var(--rose-bg); color:var(--rose);">Credit Card</span></td>
+                    <td><strong class="rose">42.0% p.a.</strong></td>
+                    <td class="amount-cell expense">₹45,000.00</td>
+                    <td>₹2,250.00</td>
+                    <td class="text-center"><span class="status-pill pending" style="background:var(--rose-bg); color:var(--rose);">Priority #1 (Payoff First)</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ICICI Personal Loan</strong></td>
+                    <td><span class="badge badge-accent">Personal Loan</span></td>
+                    <td><strong class="amber">13.5% p.a.</strong></td>
+                    <td class="amount-cell expense">₹1,50,000.00</td>
+                    <td>₹4,800.00</td>
+                    <td class="text-center"><span class="status-pill category-badge">Priority #2</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>SBI Home Loan</strong></td>
+                    <td><span class="badge badge-accent">Mortgage</span></td>
+                    <td><strong class="emerald">8.5% p.a.</strong></td>
+                    <td class="amount-cell expense">₹12,40,000.00</td>
+                    <td>₹11,500.00</td>
+                    <td class="text-center"><span class="status-pill settled">Priority #3</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tax-progress-container mt-3" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.2);">
+              <div class="tax-metric-row">
+                <div>
+                  <span class="tax-label">Total Debt:</span>
+                  <span class="tax-value rose" id="totalDebtVal">₹14,35,000.00</span>
+                </div>
+                <div>
+                  <span class="tax-label">Estimated Interest Saved (Avalanche):</span>
+                  <span class="tax-value emerald" id="debtInterestSavedVal">₹1,42,800.00</span>
+                </div>
+                <div>
+                  <span class="tax-label">Debt-Free Acceleration:</span>
+                  <span class="tax-value cyan" id="debtMonthsSavedVal">8 Months Faster</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CIBIL Credit Score Simulator Card -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-gauge-high" style="color:var(--emerald);"></i> CIBIL Credit Health Score Simulator</h3>
+                <p>Simulate credit score changes based on payment punctuality and credit utilization ratio</p>
+              </div>
+            </div>
+
+            <div class="cibil-container">
+              <div class="cibil-badge-box">
+                <div class="cibil-score-ring">
+                  <span class="cibil-num">785</span>
+                </div>
+                <div class="cibil-rating">
+                  <span class="rating-title emerald">EXCELLENT</span>
+                  <span class="rating-sub">Top 8% Indian Borrowers</span>
+                </div>
+              </div>
+
+              <div class="cibil-factors-grid">
+                <div class="factor-item">
+                  <div class="factor-header">
+                    <span>Credit Card Utilization</span>
+                    <span class="factor-val emerald" id="cibilUtilVal">18% (Optimal)</span>
+                  </div>
+                  <div class="progress-bar-wrapper" style="height:8px;">
+                    <div class="progress-bar-fill emerald" style="width: 18%;"></div>
+                  </div>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-header">
+                    <span>On-Time Payment Track Record</span>
+                    <span class="factor-val emerald">100% (Flawless)</span>
+                  </div>
+                  <div class="progress-bar-wrapper" style="height:8px;">
+                    <div class="progress-bar-fill emerald" style="width: 100%;"></div>
+                  </div>
+                </div>
+
+                <div class="factor-item">
+                  <div class="factor-header">
+                    <span>Active Credit Age</span>
+                    <span class="factor-val primary">4 Years 8 Months</span>
+                  </div>
+                  <div class="progress-bar-wrapper" style="height:8px;">
+                    <div class="progress-bar-fill primary" style="width: 75%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBTAB 3: CRISIS SHIELD -->
+        <div class="subtab-content" id="subtab-crisis-shield">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3><i class="fa-solid fa-shield-virus" style="color:var(--cyan);"></i> Financial Stress Test & Crisis Shield</h3>
+                <p>Stress-test your liquidity against unexpected life shocks</p>
+              </div>
+              <button class="btn btn-primary btn-sm" id="runStressTestBtn"><i class="fa-solid fa-bolt"></i> Run Stress Test</button>
+            </div>
+
+            <div class="crisis-grid">
+              <div class="crisis-card active" data-scenario="job-loss">
+                <div class="crisis-icon"><i class="fa-solid fa-user-slash"></i></div>
+                <h4>Scenario A: 6 Months Job Loss</h4>
+                <p>Simulates complete income pause while maintaining essential family living expenses.</p>
+                <div class="crisis-status emerald"><i class="fa-solid fa-circle-check"></i> Safe (7.7 Months Runway)</div>
+              </div>
+
+              <div class="crisis-card" data-scenario="medical">
+                <div class="crisis-icon"><i class="fa-solid fa-hospital"></i></div>
+                <h4>Scenario B: Medical Shock (₹5 Lakhs)</h4>
+                <p>Simulates sudden emergency medical hospital bill cash requirement.</p>
+                <div class="crisis-status emerald"><i class="fa-solid fa-circle-check"></i> Covered (Emergency Fund)</div>
+              </div>
+
+              <div class="crisis-card" data-scenario="market-crash">
+                <div class="crisis-icon"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                <h4>Scenario C: Market Crash (-35%)</h4>
+                <p>Simulates severe bear market drawdown on SIP investments.</p>
+                <div class="crisis-status amber"><i class="fa-solid fa-triangle-exclamation"></i> Hold Equity SIPs</div>
+              </div>
+            </div>
+
+            <div class="stress-result-box" id="stressResultBox" style="margin-top: 1.5rem; display: block;">
+              <div class="result-header">
+                <i class="fa-solid fa-shield-heart emerald" style="font-size: 1.5rem;"></i>
+                <div>
+                  <h4 style="margin-bottom: 2px;">Stress Test Summary: Robust Safety Cushion</h4>
+                  <p style="color:var(--text-muted); font-size:0.88rem;">Your current liquid reserves of ₹3,85,000 provide <strong>7.7 Months</strong> of essential living expense buffer.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- UNIQUE FEATURE 2 & 3: TAX PLANNER (80C) & RECURRING SUBSCRIPTIONS -->
+      <section class="tab-content" id="tab-tax-subscriptions">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Section 80C Tax Saver & Subscriptions</h1>
+            <p class="page-subtitle">Optimize your annual income tax liability & monitor active recurring services.</p>
+          </div>
+        </div>
+
+        <!-- Section 80C Tax Optimizer Card -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3><i class="fa-solid fa-building-columns" style="color:var(--emerald);"></i> Section 80C Income Tax Saver (₹1,50,000 Cap)</h3>
+              <p>ELSS Mutual Funds, PPF, EPF, and Life Insurance investments</p>
+            </div>
+            <span class="badge badge-accent">Tax Year FY 2026-27</span>
+          </div>
+
+          <div class="tax-progress-container">
+            <div class="tax-metric-row">
+              <div>
+                <span class="tax-label">Invested in 80C:</span>
+                <span class="tax-value emerald" id="taxInvestedVal">₹1,10,000.00</span>
+              </div>
+              <div>
+                <span class="tax-label">Remaining Headroom:</span>
+                <span class="tax-value warning" id="taxHeadroomVal">₹40,000.00</span>
+              </div>
+              <div>
+                <span class="tax-label">Est. Tax Savings (30% Slab):</span>
+                <span class="tax-value cyan" id="taxSavingsVal">₹34,320.00</span>
+              </div>
+            </div>
+
+            <div class="progress-bar-wrapper" style="height: 14px; margin-top: 1.25rem;">
+              <div class="progress-bar-fill normal" id="taxProgressFill" style="width: 73.3%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Subscriptions Manager -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3><i class="fa-solid fa-rotate-right" style="color:var(--cyan);"></i> Active Recurring Subscriptions</h3>
+              <p>Track auto-renewals & avoid unnecessary recurring charges</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="addSubscriptionBtn"><i class="fa-solid fa-plus"></i> Add Subscription</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>Billing Cycle</th>
+                  <th>Renews On</th>
+                  <th>Amount (₹)</th>
+                  <th class="text-center">Auto-Renew</th>
+                </tr>
+              </thead>
+              <tbody id="subscriptionsBody">
+                <tr>
+                  <td><strong>Netflix Premium 4K</strong></td>
+                  <td><span class="category-badge">Monthly</span></td>
+                  <td>Oct 15, 2026</td>
+                  <td class="amount-cell expense">₹649.00</td>
+                  <td class="text-center"><span class="status-pill settled">Active</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Spotify Family Plan</strong></td>
+                  <td><span class="category-badge">Monthly</span></td>
+                  <td>Oct 18, 2026</td>
+                  <td class="amount-cell expense">₹179.00</td>
+                  <td class="text-center"><span class="status-pill settled">Active</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Amazon Prime Annual</strong></td>
+                  <td><span class="category-badge">Yearly</span></td>
+                  <td>Jan 10, 2027</td>
+                  <td class="amount-cell expense">₹1,499.00</td>
+                  <td class="text-center"><span class="status-pill settled">Active</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cult.fit Gym Membership</strong></td>
+                  <td><span class="category-badge">Monthly</span></td>
+                  <td>Nov 01, 2026</td>
+                  <td class="amount-cell expense">₹2,500.00</td>
+                  <td class="text-center"><span class="status-pill settled">Active</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: ANALYTICS -->
+      <section class="tab-content" id="tab-analytics">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fingo Analytics</h1>
+            <p class="page-subtitle">6-Month accumulation forecast and behavioral profile.</p>
+          </div>
+        </div>
+
+        <div class="insights-grid">
+          <div class="card insight-card">
+            <div class="insight-icon info"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="insight-content">
+              <h4>Primary Expense Category</h4>
+              <p class="insight-value" id="topCategoryVal">Housing (38%)</p>
+              <p class="insight-desc">Flat rent & apartment maintenance.</p>
+            </div>
+          </div>
+
+          <div class="card insight-card">
+            <div class="insight-icon success"><i class="fa-solid fa-seedling"></i></div>
+            <div class="insight-content">
+              <h4>Wealth Accumulation Projection</h4>
+              <p class="insight-value" id="savingsMomentumVal">₹9,91,800 projected</p>
+              <p class="insight-desc">On track for 1 Million ₹ wealth milestone.</p>
+            </div>
+          </div>
+
+          <div class="card insight-card">
+            <div class="insight-icon warning"><i class="fa-solid fa-shield-cat"></i></div>
+            <div class="insight-content">
+              <h4>Budget Compliance</h4>
+              <p class="insight-value" id="budgetAlertVal">100% Compliant</p>
+              <p class="insight-desc" id="budgetAlertDesc">Within allocated category limits.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="card chart-card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Net Savings Forecast (₹)</h3>
+                <p>6-Month projected accumulation</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="projectionChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card chart-card flex-1">
+            <div class="card-header">
+              <div class="card-title-group">
+                <h3>Behavioral Spending Radar</h3>
+                <p>Spending intensity breakdown</p>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="radarChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: PROFILE -->
+      <section class="tab-content" id="tab-profile">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fingo Executive Profile</h1>
+            <p class="page-subtitle">Manage account security, personal credentials, and profile photo.</p>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="card profile-info-card">
+            <div class="profile-avatar-wrapper">
+              <div id="profileCardAvatarContainer"></div>
+              <button class="avatar-edit-btn" id="openAvatarModalBtn" title="Change Profile Picture"><i class="fa-solid fa-camera"></i></button>
+            </div>
+
+            <h3 id="profileCardName">Jashnavi Patel</h3>
+            <span class="badge badge-accent" id="profileCardEmail">jashnavi.patel@fingo.in</span>
+
+            <div class="profile-avatar-actions" style="margin-top: 1rem;">
+              <button class="btn btn-secondary btn-sm" id="editPhotoBtn">
+                <i class="fa-solid fa-image"></i> Change Photo
+              </button>
+              <button class="btn btn-secondary btn-sm" id="removePhotoBtn" style="color:var(--rose);">
+                <i class="fa-solid fa-trash"></i> Remove Photo
+              </button>
+            </div>
+
+            <div class="profile-stats">
+              <div class="p-stat">
+                <span class="p-stat-val">₹4,85,200</span>
+                <span class="p-stat-lbl">Managed Net Worth</span>
+              </div>
+              <div class="p-stat">
+                <span class="p-stat-val">92 / 100</span>
+                <span class="p-stat-lbl">Health Index</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card profile-settings-card">
+            <h3><i class="fa-solid fa-user-pen"></i> Account Settings</h3>
+            <form id="profileForm">
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="profName">Full Name</label>
+                  <input type="text" id="profName" required value="Jashnavi Patel">
+                </div>
+                <div class="form-group flex-1">
+                  <label for="profEmail">Email Address</label>
+                  <input type="email" id="profEmail" required value="jashnavi.patel@fingo.in">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="profPhone">Mobile (UPI Linked)</label>
+                  <input type="text" id="profPhone" value="+91 98765 43210">
+                </div>
+                <div class="form-group flex-1">
+                  <label for="profCurrency">Default Currency</label>
+                  <select id="profCurrency" class="custom-select">
+                    <option value="₹" selected>Indian Rupee (₹ INR)</option>
+                    <option value="$">US Dollar ($ USD)</option>
+                    <option value="€">Euro (€ EUR)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="profMonthlyGoal">Monthly Savings Target (₹)</label>
+                  <input type="number" id="profMonthlyGoal" value="50000" step="1000">
+                </div>
+                <div class="form-group flex-1">
+                  <label for="profRisk">Investment Strategy</label>
+                  <select id="profRisk" class="custom-select">
+                    <option value="Moderate" selected>Moderate (Mutual Funds & SIPs)</option>
+                    <option value="Conservative">Conservative (FDs & Gold)</option>
+                    <option value="Aggressive">Aggressive (Stocks & Crypto)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="avatarModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Change Profile Picture</h3>
+        <button class="modal-close" id="closeAvatarModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="avatarForm">
+        <div class="form-group">
+          <label for="avatarUrlInput">Profile Picture Image URL</label>
+          <input type="url" id="avatarUrlInput" placeholder="https://images.unsplash.com/... or paste image link">
+        </div>
+
+        <div class="form-group" style="text-align: center; margin: 1.5rem 0;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">OR</span>
+        </div>
+
+        <div class="form-group">
+          <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+          <button type="button" class="btn btn-secondary btn-block" id="uploadFileBtn">
+            <i class="fa-solid fa-upload"></i> Upload from Computer
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label>Or Choose a Preset Avatar</label>
+          <div class="preset-avatars-grid">
+            <div class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=250" alt="Executive 1">
+            </div>
+            <div class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250" alt="Executive 2">
+            </div>
+            <div class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=250" alt="Executive 3">
+            </div>
+            <div class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250" alt="Executive 4">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="justify-content: space-between;">
+          <button type="button" class="btn btn-secondary" id="modalRemovePhotoBtn" style="color:var(--rose);">
+            <i class="fa-solid fa-trash"></i> Remove Photo (Keep Empty)
+          </button>
+          <div style="display:flex; gap:0.5rem;">
+            <button type="button" class="btn btn-secondary" id="cancelAvatarModalBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Photo</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="transModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modalTitle">Record Expense / Income</h3>
+        <button class="modal-close" id="closeTransModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="transForm">
+        <input type="hidden" id="transId">
+        
+        <div class="form-group">
+          <label>Transaction Type</label>
+          <div class="type-selector">
+            <button type="button" class="type-btn active expense" data-type="expense">
+              <i class="fa-solid fa-arrow-up-right"></i> Expense
+            </button>
+            <button type="button" class="type-btn income" data-type="income">
+              <i class="fa-solid fa-arrow-down-left"></i> Income
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="transTitle">Description / Title *</label>
+          <input type="text" id="transTitle" required placeholder="e.g. Swiggy Order, Zerodha SIP, Salary">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="transAmount">Amount *</label>
+            <div class="input-prefix-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="transAmount" step="1" min="1" required placeholder="500">
+            </div>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="transCategory">Category *</label>
+            <select id="transCategory" class="custom-select" required>
+              <option value="Housing">Housing</option>
+              <option value="Food & Dining">Food & Dining</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Salary & Earnings">Salary & Earnings</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Investment / SIP">Investment / SIP</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="transDate">Date *</label>
+            <input type="date" id="transDate" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="transPayment">Payment Method</label>
+            <select id="transPayment" class="custom-select">
+              <option value="UPI (GPay/PhonePe)">UPI (GPay/PhonePe)</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Net Banking">Net Banking</option>
+              <option value="Cash">Cash</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="transNote">Notes (Optional)</label>
+          <textarea id="transNote" rows="2" placeholder="e.g. Ref #UPI94102941"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelTransModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="transDetailModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Transaction Receipt & Details</h3>
+        <button class="modal-close" id="closeDetailModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="detail-modal-body" id="transDetailContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="detailEditBtn"><i class="fa-solid fa-pen"></i> Edit Entry</button>
+        <button class="btn btn-primary" id="detailCloseBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="metricDetailModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="metricDetailTitle">Metric Breakdown</h3>
+        <button class="modal-close" id="closeMetricDetailBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="detail-modal-body" id="metricDetailContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="metricDetailCloseBtn">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="goalModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="goalModalTitle">Create Savings Milestone</h3>
+        <button class="modal-close" id="closeGoalModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="goalForm">
+        <input type="hidden" id="goalId">
+
+        <div class="form-group">
+          <label for="goalTitle">Goal Title *</label>
+          <input type="text" id="goalTitle" required placeholder="e.g. Emergency Reserve, Gold ETF">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="goalTarget">Target Amount *</label>
+            <div class="input-prefix-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="goalTarget" step="1000" min="1000" required placeholder="100000">
+            </div>
+          </div>
+          <div class="form-group flex-1">
+            <label for="goalCurrent">Current Saved</label>
+            <div class="input-prefix-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="goalCurrent" step="500" min="0" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="goalCategory">Icon Category</label>
+            <select id="goalCategory" class="custom-select">
+              <option value="fa-shield-heart">Emergency Reserve</option>
+              <option value="fa-umbrella-beach">Vacation / Trip</option>
+              <option value="fa-car">Car / Vehicle</option>
+              <option value="fa-house">Home / Real Estate</option>
+              <option value="fa-chart-line">SIP / Mutual Fund</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="goalTargetDate">Target Date</label>
+            <input type="date" id="goalTargetDate">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelGoalModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Goal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="budgetModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>Category Budget Limit (₹)</h3>
+        <button class="modal-close" id="closeBudgetModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="budgetForm">
+        <div class="form-group">
+          <label for="budgetCategory">Category *</label>
+          <select id="budgetCategory" class="custom-select" required>
+            <option value="Housing">Housing</option>
+            <option value="Food & Dining">Food & Dining</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="budgetLimit">Monthly Limit (₹) *</label>
+          <div class="input-prefix-group">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="budgetLimit" step="500" min="500" required placeholder="10000">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelBudgetModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Limit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addSplitModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>New Group Split Bill</h3>
+        <button class="modal-close" id="closeAddSplitModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="addSplitForm">
+        <div class="form-group">
+          <label for="splitTitle">Expense Title *</label>
+          <input type="text" id="splitTitle" required placeholder="e.g. Goa Villa Rent & Dining">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="splitTotalAmount">Total Bill Amount (₹) *</label>
+            <div class="input-prefix-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="splitTotalAmount" step="50" min="100" required placeholder="4800">
+            </div>
+          </div>
+          <div class="form-group flex-1">
+            <label for="splitPaidBy">Paid By *</label>
+            <select id="splitPaidBy" class="custom-select">
+              <option value="You (Jashnavi Patel)">You (Jashnavi Patel)</option>
+              <option value="Amit Sharma">Amit Sharma</option>
+              <option value="Priya Patel">Priya Patel</option>
+              <option value="Vikas Verma">Vikas Verma</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="splitMembers">Members (Comma Separated)</label>
+          <input type="text" id="splitMembers" value="Jashnavi Patel, Amit Sharma, Priya Patel, Vikas Verma">
+        </div>
+
+        <div class="form-group">
+          <label for="splitPayeeUpi">Payee UPI ID (for QR payment)</label>
+          <div class="input-prefix-group">
+            <i class="fa-solid fa-qrcode input-icon"></i>
+            <input type="text" id="splitPayeeUpi" value="jashnavi.patel@okaxis" placeholder="username@upi">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelSplitModalBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Split Bill</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="upiQrModal">
+    <div class="modal-container" style="max-width: 480px; text-align: center;">
+      <div class="modal-header">
+        <h3>Instant UPI QR Settle</h3>
+        <button class="modal-close" id="closeUpiQrModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <div class="upi-qr-body">
+        <div class="upi-amount-badge">
+          <span class="upi-label">Amount to Pay</span>
+          <h2 class="upi-val emerald" id="upiQrModalAmount">₹1,200.00</h2>
+          <span class="badge badge-accent" id="upiQrModalPayee">To: Jashnavi Patel (jashnavi.patel@okaxis)</span>
+        </div>
+
+        <div class="qr-code-box" style="margin: 1.25rem auto; padding: 1rem; background: #ffffff; border-radius: 16px; display: inline-block; box-shadow: var(--shadow-md);">
+          <img id="upiQrImg" src="" alt="UPI Payment QR Code" style="width: 200px; height: 200px; display: block; border-radius: 8px;">
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          <i class="fa-solid fa-camera" style="color:var(--emerald);"></i> Scan with Google Pay, PhonePe, Paytm, or BHIM UPI
+        </p>
+
+        <div class="upi-apps-row">
+          <a href="#" id="gpayDeepLink" class="upi-app-chip" target="_blank">
+            <i class="fa-brands fa-google-pay"></i> GPay
+          </a>
+          <a href="#" id="phonepeDeepLink" class="upi-app-chip" target="_blank">
+            <i class="fa-solid fa-mobile-screen-button"></i> PhonePe
+          </a>
+          <a href="#" id="paytmDeepLink" class="upi-app-chip" target="_blank">
+            <i class="fa-solid fa-wallet"></i> Paytm
+          </a>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between; margin-top: 1.25rem;">
+        <button class="btn btn-secondary" id="closeUpiModalBtn">Close</button>
+        <button class="btn btn-primary" id="markSettledBtn"><i class="fa-solid fa-circle-check"></i> Mark as Settled</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
